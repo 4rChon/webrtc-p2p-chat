@@ -1,0 +1,17 @@
+{
+  "name": "p2pvideo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js:bundle.js"
+  },
+  "author": "Benjamin Bugeja",
+  "license": "ISC",
+  "dependencies": {
+    "simple-peer": "^6.0.7"
+  },
+  "devDependencies": {
+    "budo": "^9.0.0"
+  }
+}
