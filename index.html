@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>        
-        <title></title>
+        <title>P2P Chat Test</title>
         <meta charset="UTF-8"/>        
     </head>
     <body>
-        <label>Your ID: </label><br/>
-        <textarea id="yourId"></textarea><br/>
-        <label>Other ID: </label><br/>
-        <textarea id="otherId"></textarea>        
-        <button id="connect">connect</button><br/>
-        
-        <label>Enter Message:</label><br/>
-        <textarea id="yourMessage"></textarea>
-        <button id="send">send</button>
-        <pre id="messages"></pre>
-        
+        <div id="container">
+            <div id="errorMsg">Errors:</div>
+            <div id="status">Status:</div>
+            <label>Your ID: </label><br/>
+            <textarea id="yourId"></textarea><br/>
+            <label>Other ID: </label><br/>
+            <textarea id="otherId"></textarea>        
+            <button id="connect">connect</button><br/>
+            
+            <label>Enter Message:</label><br/>
+            <textarea id="yourMessage"></textarea>
+            <button id="send">send</button>
+            <pre id="messages"></pre>
+
+            <div id="videoContainer"></div>
+                        
+        </div>
+        <script src="adapter.js" charset="utf-8"></script>
         <script src="bundle.js" charset="utf-8"></script>
     </body>
 </html>

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js:bundle.js"
+    "start": "budo index.js:bundle.js --ssl --cors"
   },
   "author": "Benjamin Bugeja",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "simple-peer": "^6.0.7"
   },
   "devDependencies": {
-    "budo": "^9.0.0"
+    "budo": "^9.0.0",
+    "webrtc-adapter": "^2.0.3"
   }
 }
