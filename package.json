@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js:bundle.js --ssl --cors"
+    "start": "budo client.js:bundle.js"
   },
   "author": "Benjamin Bugeja",
   "license": "ISC",
   "dependencies": {
-    "simple-peer": "^6.0.7"
+    "peer": "^0.2.8",
+    "peerjs": "^0.3.14"
   },
   "devDependencies": {
     "budo": "^9.0.0",

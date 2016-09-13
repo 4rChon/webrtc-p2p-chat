@@ -6,10 +6,9 @@
     </head>
     <body>
         <div id="container">
-            <div id="errorMsg">Errors:</div>
-            <div id="status">Status:</div>
-            <label>Your ID: </label><br/>
-            <textarea id="yourId"></textarea><br/>
+            <labels>Errors:</labels><div id="errorMsg">---</div></br>
+            <label>Status:</label><div id="status">---</div></br>
+            <label>Your ID: <div id="peerId">---</div></br>
             <label>Other ID: </label><br/>
             <textarea id="otherId"></textarea>        
             <button id="connect">connect</button><br/>
@@ -22,6 +21,8 @@
             <div id="videoContainer"></div>
                         
         </div>
+        
+        <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
         <script src="adapter.js" charset="utf-8"></script>
         <script src="bundle.js" charset="utf-8"></script>
     </body>
