@@ -6,14 +6,14 @@
   "scripts": {
     "start": "budo client.js:bundle.js"
   },
+  "repository": "https://github.com/4rChon/webrtc-p2p-chat",
   "author": "Benjamin Bugeja",
   "license": "ISC",
-  "dependencies": {
-    "peer": "^0.2.8",
-    "peerjs": "^0.3.14"
+  "dependencies": {    
   },
   "devDependencies": {
     "budo": "^9.0.0",
+    "peer": "^0.2.8",
     "webrtc-adapter": "^2.0.3"
   }
 }

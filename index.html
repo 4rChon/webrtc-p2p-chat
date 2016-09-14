@@ -2,27 +2,55 @@
 <html lang="en">
     <head>        
         <title>P2P Chat Test</title>
-        <meta charset="UTF-8"/>        
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
     <body>
-        <div id="container">
-            <labels>Errors:</labels><div id="errorMsg">---</div></br>
-            <label>Status:</label><div id="status">---</div></br>
-            <label>Your ID: <div id="peerId">---</div></br>
-            <label>Other ID: </label><br/>
-            <textarea id="otherId"></textarea>        
-            <button id="connect">connect</button><br/>
+        <div class="container" id="container">
+            <div style="display:none"><label for="errorMsg">Errors:</label><div id="errorMsg">---</div></div>
+            <div style="display:none"><label for="status">Status:</label><div id="status">---</div></div>
+            <div id="aliasForm">
+                <div class="form-inline">
+                    <div class="form-group" id="peerIdGroup">
+                        <button class="glyphicon glyphicon-copy form-control" id="copy"></button>
+                        <input class="form-control" id="peerId" placeholder="Generating ID..." readonly>
+                    </div>
+                    <div class="form-group" id="aliasGroup">
+                        <button class="glyphicon glyphicon-ok form-control" id="confirm"></button>
+                        <input class="form-control" id="alias" placeholder="Alias">
+                    </div>
+                </div>
+            </div>
+                
+            <div id="peerForm" class="form-inline">
+                <input class="form-control" id="otherId" placeholder="Enter a peer ID"></input>        
+                <button class="btn btn-success" id="connect">Connect</button>
+                <button class="btn btn-danger" id="disconnect">Disconnect</button>
+            </div>
             
-            <label>Enter Message:</label><br/>
-            <textarea id="yourMessage"></textarea>
-            <button id="send">send</button>
-            <pre id="messages"></pre>
+            <div id="messageForm">
+                <form class="form-inline">
+                    <pre id="messages"></pre>
+                    <input class="form-control " id="text" rows="2" placeholder="Type a message"/>
+                    <input class="btn btn-primary" id="send" value="Send"/>
+                    <div class="dropdown" id="connContainer">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Active Connections
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="connections"></ul>
+                    </div>
+                </form>
+            </div>
 
-            <div id="videoContainer"></div>
-                        
+            <div class="video" id="videoContainer"></div>            
         </div>
-        
-        <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js"></script>
         <script src="adapter.js" charset="utf-8"></script>
         <script src="bundle.js" charset="utf-8"></script>
     </body>

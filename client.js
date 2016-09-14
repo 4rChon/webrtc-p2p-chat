@@ -1,16 +1,14 @@
 'use strict';
 
-var errorElement = document.querySelector('#errorMsg');
-var status = document.querySelector('#status');
-var peerId = document.querySelector('#peerId');
-
 var constraints = window.constraints = {
     audio: true, 
     video: false
 };
 
+var username = "";
+
 var peer = new Peer(
-    'testId_' + Date.now(),
+    'id_' + (Date.now()+'').slice(6),
     {
         debug: 3,
         host: 'localhost',
@@ -22,62 +20,124 @@ var peer = new Peer(
                 credential: 'muazkh',
                 username: 'webrtc@live.com'
             }
-        ]}
+        ]},
+        logFunction: function() {
+            var copy = Array.prototype.slice.call(arguments).join(' ');
+            $('.log').append(copy + '<br>');
+        }
     }
 );
 
-status.innerHTML = "Retrieving id";
-peerId.innerHTML = peer.id;
+$('#status').text("Retrieving ID");
+
+var connectedPeers = {};
 
 peer.on('open', function(id) {        
-    peerId.innerHTML = id;
-    console.log('My peer ID is: ' + id);
+    $('#peerId').val(id);
+    username = id;
 });
 
-var connections = peer.connections;
+peer.on('connection', connect);
 
-peer.on('connection', function (data) {
-    status.innerHTML = "Connected";
-});
+peer.on('error', function(err) {
+    $('#errorMsg').text(err);
+    console.log(err);
+})
 
-document.getElementById('connect').addEventListener('click', function () {
-    status.innerHTML = "Connecting";
-    var otherId = document.getElementById('otherId').value;
-    peer.connect(otherId);
-});
 
-document.getElementById('send').addEventListener('click', function () {
-    status.innerHTML = "Sending";
-    var yourMessage = document.getElementById('yourMessage').value;
-    for(var conn in peer.connections){
-        console.log(connections[conn][0]);
-        connections[conn][0].send(yourMessage);
-        connections[conn][0].on('open', function() {
-            console.log('Open Connection');
-            connections[conn][0].on('data', function(data) {
-                console.log('Received Data');
-                status.innerHTML = "Receiving Data";
-                document.getElementById('messages').textContent += data + '\n';
-            });
+function connect(c) {
+    if(c.label === 'chat') {
+        $('#status').text("Connected");
+        var connection = $('<li></li>').addClass('connection').addClass('active').attr('id', c.peer).html(c.peer);        
+        var header = $('<div></div>').html('Chat with <strong>' + c.peer + '</strong>');
+        var connStatus = $('<div><em>Peer connected.</em></div>');
+        $('#connections').append(connection);
+        $('#messages').append(connStatus);
+        $('#messages').append(header);
+        
+        c.on('data', function(data) {
+            console.log(c);
+            $('#messages').append('<div><span class="peer">' + c.peer + '</span>: ' + data + '</div>');
+        });
+        c.on('close', function() {
+            $('#messages').append(c.peer + ' has left the chat.');
+            $('.connection:contains(' + c.peer + ')').remove();
+            delete connectedPeers[c.peer];
+        })
+    }
+    connectedPeers[c.peer] = 1;
+}
+
+$('#connect').click(function () {
+    $('#status').text("Connecting");
+    var requestedPeer = $('#otherId').val();
+    if(!connectedPeers[requestedPeer]){
+        var c = peer.connect(requestedPeer, {
+            label: 'chat',
+            serialization: 'none',
+            metadata: {user: username}
         });
     }
+    c.on('open', function() {
+        connect(c);
+    });
+    c.on('error', function(err) {$('#errorMsg').text(err); });
+    var otherId = $('#otherId').val();
 });
 
-function handleError(error) {
-    if (error.name === 'ConstraintNotSatisfiedError') {
-        errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
-            constraints.video.width.exact + ' px is not supported by your device.');
-    } else if (error.name === 'PerissionDeniedError') {
-        errorMsg('Permissions have not been granted to use your camera and ' +
-            'microphone, you need to allow the page access to your devices in ' +
-            'order for the connection to work.');
-    }
-    errorMsg('getUserMedia error: ' + error.name, error);
+$('#disconnect').click(function() {
+    eachActiveConnection(function(c) {
+        c.close();
+    });
+    $('#connections').empty();
+});
+
+$('#send').click(function(e) {
+    e.preventDefault();
+
+    var msg = $('#text').val();
+    eachActiveConnection(function(c, $c) {
+        if (c.label === 'chat'){
+            c.send(msg);
+            $('#messages').append('<div><span class="you">You: </span>' + msg + '</div>');
+        }
+    });
+    $('#text').val('');
+    $('#text').focus();
+})
+
+function eachActiveConnection(fn) {
+    var actives = $('.active');
+    var checkedIds = {};
+    actives.each(function() {
+        var peerId = $(this).attr('id');
+
+        if(!checkedIds[peerId]) {
+            var conns = peer.connections[peerId];
+            for (var i = 0, ii = conns.length; i < ii; i += 1) {
+                var conn = conns[i];
+                fn(conn, $(this));
+            }
+        }
+
+        checkedIds[peerId] = 1;
+    })
 }
 
-function errorMsg(msg, error) {
-    errorElement.innerHTML = msg;
-    if(typeof error !== 'undefined') {
-        console.error("ERROR: " + error);
+window.onunload = window.onbeforeunnload = function(e) {
+    if(!!peer && !peer.destroyed) {
+        peer.destroy();
     }
-}
+};
+
+$("#copy").click(function() {
+    var target = document.getElementById('peerId');
+    target.focus();
+    target.setSelectionRange(0, target.value.length);
+    document.execCommand("copy");
+})
+
+$("#confirm").click(function() {
+    username = $('#alias').val();
+    $('#alias').attr("placeholder", username);
+})
