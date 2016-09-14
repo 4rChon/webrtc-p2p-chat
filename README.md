@@ -9,10 +9,15 @@ Messing around with WebRTC - initial code taken from https://www.youtube.com/wat
 
 ### Setup
 
-```
+```bash
+# Clone directory to webrtc-p2p-chat/
 git clone https://github.com/4rChon/webrtc-p2p-chat.git
-cd webrtc-p2p-chat
-git install
+
+# Navigate to cloned directory
+cd webrtc-p2p-chat 
+
+# Install dependencies listed in package.json
+npm install 
 ```
 
 ### Initialising
