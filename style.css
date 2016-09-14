@@ -18,7 +18,7 @@ body {
 #peerId {
     border-radius: 0px 10px 10px 0px;
     float: left;
-    overflow: auto;
+    width: 70%;    
 }
 
 #copy {
@@ -36,11 +36,11 @@ body {
 #alias {
     top: 0px;
     float: right;
+    width: 70%;
     border-radius: 10px 0px 0px 10px;
 }
 
 #confirm {
-    overflow: auto;
     top: 0px;
     float: right;
     border-radius: 0px 10px 10px 0px;
