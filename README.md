@@ -1,6 +1,10 @@
 # webrtc-p2p-chat
 Messing around with WebRTC - initial code taken from https://www.youtube.com/watch?v=ieBtXwHvoNk
 
+## Screenshot
+
+<img src="http://i.imgur.com/0JuCjR7.png" alt="Screenshot" width="400";/>
+
 ## Instructions
 
 ### Requirements
