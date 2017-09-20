@@ -3,7 +3,7 @@ Messing around with WebRTC - initial code taken from https://www.youtube.com/wat
 
 ## Screenshot
 
-<img src="http://i.imgur.com/0JuCjR7.png" alt="Screenshot" width="400";/>
+<img src="http://i.imgur.com/0JuCjR7.png" alt="Screenshot" width="400"/>
 
 ## Instructions
 
